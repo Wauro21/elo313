@@ -346,12 +346,14 @@ figure("name", "Sistema #2 Estabilidad BIBO")
         title("Entrada del sistema: Delta de Kronecker en n = 0");
         xlabel("Tiempo s");
         ylabel("Amplitud -")
+        xlim([0, 0.1])
         grid on
     subplot(2,1,2)
         stem(time, sistema2(kronecker_delta), "color",Colors(2,:), "linewidth", 1.15)
         title("Salida del sistema");
         xlabel("Tiempo s");
         ylabel("Amplitud -")
+        xlim([0, 0.1])
         grid on
 %save        
 cfg.PaperPositionMode = 'auto';
@@ -363,6 +365,7 @@ figure("name", "Sistema #2 Estabilidad BIBO")
         title("Entrada del sistema: Escalón unitario en n = 5")
         xlabel("Tiempo s")
         ylabel("Amplitud")
+        xlim([4.8, 5.2])
         grid on
     subplot(2,1,2)
         stem(time,sistema2(heaviside(time-5)), "color", Colors(2,:), "linewidth", 1.15);
@@ -593,7 +596,7 @@ print("imgs/sistema_3_bibo_heaviside_n_5",'-dpdf','-bestfit')
 figure("name", "Sistema #2 Estabilidad BIBO")
     subplot(2,1,1)
         stem(time, sawtooth(2*pi*time), "color", Colors(1,:), "linewidth", 1.15)
-        title("Entrada del sistema: Escalón unitario en n = 5")
+        title("Entrada del sistema: Señal diente de sierra de frecuencia 1 Hz")
         xlabel("Tiempo s")
         ylabel("Amplitud")
         grid on
@@ -602,7 +605,6 @@ figure("name", "Sistema #2 Estabilidad BIBO")
         title("Salida del sistema");
         xlabel("Tiempo s");
         ylabel("Amplitud -")
-        ylim([-1,3])
         grid on
 %save        
 cfg.PaperPositionMode = 'auto';

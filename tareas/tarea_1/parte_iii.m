@@ -31,6 +31,9 @@ figure("name", "probando")
         xlabel("Tiempo s")
         ylabel("Amplitud")
         title("Integrador: Y = S2(X)")
+%save
+cfg.PaperPositionMode = 'auto';
+print("imgs/3_b",'-dpdf','-bestfit')
 %% Entrada X[n] = delta(n) - delta(n-5)
 clc, clear, close all
 
@@ -61,7 +64,9 @@ figure("name", "Entrada : Deltas de Kronecker");
         ylabel("Amplitud")
         grid on
         title("Integrador")
-
+%save
+cfg.PaperPositionMode = 'auto';
+print("imgs/3_c",'-dpdf','-bestfit')
 %% Entrada X[n] = heaviside(n) - heaviside(n-5)
 clc, clear, close all
 
@@ -93,6 +98,10 @@ figure("name", "Entrada : Escalones unitarios");
         ylabel("Amplitud")
         grid on
         title("Integrador")
+
+%save
+cfg.PaperPositionMode = 'auto';
+print("imgs/3_d",'-dpdf','-bestfit')
 
 %% Archivos de audio: music.wav
 [music, fs_music] = audioread("rsrc/music.wav");

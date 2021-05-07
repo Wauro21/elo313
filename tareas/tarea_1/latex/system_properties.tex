@@ -231,5 +231,97 @@
 
 	\subsection{Sistema \#3}
 		\subsubsection{Invariancia temporal}
+			Aplicando la señal de prueba en el sistema, con retardo igual a cero: 
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_invarianza_temporal_noretardo.pdf}
+				\caption{Sistema \#3 Entrada: Pulso cuadrado de duracion 1 \textit{s} \textbf{(Arriba)}. Salida del sistema \textbf{(Abajo)}.}
+				\label{fig:s_3_time_invariant_test_1}
+			\end{figure}
+			Para un retardo de 5 s:
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_invarianza_temporal_retardo.pdf}
+				\caption{Sistema \#3 Entrada: Pulso cuadrado de duracion 1 \textit{s}, desplazado en 5 \textit{s} \textbf{(Arriba)}. Salida del sistema \textbf{(Abajo)}.}
+				\label{fig:s_3_time_invariant_test_2}
+			\end{figure}
 			
-	
+			Se obtiene la misma salida, simplemente desplazada, cumpliendo la condición de la ecuación \ref{eq:cond_invarianza_temporal}. Se puede decir que el sistema es \textbf{invariante en el tiempo}.
+
+\newpage
+
+		\subsubsection{Linealidad}
+			Generando las entradas del sistema $u_{1}[n]$ y $u_{2}[n]$:
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_linealidad_entradas.pdf}
+				\caption{Entradas del sistema}
+				\label{fig:s_3_lineality_inputs}
+			\end{figure}
+			Comprobando las salidas del sistema:
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_linealidad_salidas.pdf}
+				\caption{Salidas del sistema: $Y[n]$ \textbf{(Arriba)}. $Y_{1}[n] + Y_{2}[n]$ \textbf{(Abajo)}.}
+				\label{fig:s_3_lineality_outputs}	
+			\end{figure}
+
+\newpage			
+
+			Realizando la comparación de salidas:
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_linealidad_superpuestas.pdf}
+				\caption{Superposición de las señales de salida \textbf{(Arriba)}. Representación de la resta punto a punto de las señales. \textbf{(Abajo)}.}
+				\label{fig:s_3_lineality_superposition}
+			\end{figure}
+			
+			Dado el resultado obtenido en la figura \ref{fig:s_3_lineality_outputs}, ambas señales son identicas, hecho que es comprobado en la figura \ref{fig:s_3_lineality_superposition}, donde se puede comprobar que la diferencia de ambas señales es del orden de $10^{-12}$. Por lo que se puede decir que el sistema cumple \textbf{linealidad}.
+			
+		\subsubsection{Estabilidad BIBO}
+			Aplicandole al sistema un delta de Kronecker:
+		
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_bibo_n_0.pdf}
+				\caption{Sistema \#3, para una entrada de un delta de Kronecker \textbf{(Arriba)}, para la cual se tiene la siguiente respuesta \textbf{(Abajo)}.}
+				\label{fig:s_3_bibo_n_0}
+			\end{figure}
+		
+			A la salida del sistema, se obtiene una señal que se asemeja a un escalón unitario, el cual es acotado. A partir del resultado, para esta señal, podemos decir que para un delta, el sistema es estable. Procediendo a probar con un escalón unitario:
+		
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_bibo_heaviside_n_5.pdf}
+				\caption{Sistema \#3, para una entrada de escalón unitario, activado en n = 5 \textbf{(Arriba}}, para el cual se tiene la siguiente respuesta \textbf{(Abajo)}. 
+				\label{fig:s_3_bibo_heaviside_n_5}
+			\end{figure}
+		
+			Para esta salida,la respuesta del sistema es similar a la anterior, lo que da para especular, que el sistema mantiene la entrada que recibe, para este entrada el sistema nuevamente es estable. Siguiendo con la última señal de prueba, una señal triangular de amplitud 1 y frecuencia 1 \textit{Hz}: 
+			\begin{figure}[H]
+				\center
+				\includegraphics[width=0.6\textwidth,clip, trim = {2cm 7.0cm 2.2cm 7.0cm}]{../imgs/sistema_3_bibo_sawtooth.pdf}
+				\caption{Sistema \#3, para una entrada de señal triangular \textbf{(Arriba)}, se tiene la siguiente salida \textbf{(Abajo)}.}
+				\label{fig:s_3_bibo_sawtooth}
+			\end{figure}
+		
+			Para esta entrada, el sistema tiende a amplificarse, lo que da pie a asumir, que la salida no será acotada. Por lo que se puede decir que el sistema \textbf{no es estable}.
+			
+	\subsection{Resumen}
+		Resumiendo los resultados hallados en una tabla:
+		\begin{table}[H]
+			\center
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				\textbf{Criterio} & \textbf{S1} & \textbf{S2} & \textbf{S3} \\
+				\hline
+				\textbf{Invariancia temporal} & No & Si & Si \\
+				\hline
+				\textbf{Linealidad} & Si & No & Si \\
+				\hline
+				\textbf{Estabilidad BIBO} & No & Si & No \\
+				\hline			
+			\end{tabular}
+			\caption{Resumen de las características de los sistemas}
+			\label{tab:summary_systems}
+		\end{table}

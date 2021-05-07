@@ -20,7 +20,10 @@ figure("name", "Sistema Sa(x), respuesta a impulso")
     xlabel("Tiempo s")
     ylabel("Amplitud ")
     grid on
-%save
+%save        
+cfg.PaperPositionMode = 'auto';
+print("imgs/2_Sa",'-dpdf','-bestfit')
+
 
 
 % Sb(deltaKronecker)
@@ -32,18 +35,20 @@ figure("name", "Sistema Sb(x), respuesta a impulso")
     ylabel("Amplitud ")
     grid on
 %save
-
+cfg.PaperPositionMode = 'auto';
+print("imgs/2_Sb",'-dpdf','-bestfit')
 
 % Sb(Sa(deltaKronecker))
 Sba_response = Sb(Sa(test_signal));
 figure("name", "Sistema Sb(Sa(x)), respuesta a impulso")
-    stem(time, Sba_response, "color",Colors(3,:), "linewidth",1.15)
+    stem(time, Sba_response, "color",Colors(4,:), "linewidth",1.15)
     xlim([0,0.03])
     xlabel("Tiempo s")
     ylabel("Amplitud ")
     grid on
 %save
-
+cfg.PaperPositionMode = 'auto';
+print("imgs/2_SbSa",'-dpdf','-bestfit')
 
 
 % Sistema A
@@ -52,6 +57,7 @@ num = [-1];
 den = [1 -0.5];
 y = filter(num,den,x);
 end
+
 % Sistema B
 function y = Sb(x)
 num = [-1 0.5];
