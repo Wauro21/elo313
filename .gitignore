@@ -3,3 +3,7 @@
 
 # Ignore enunciados
 **/enunciado.*
+
+# Ignore matlab temps
+
+**/*.asv
