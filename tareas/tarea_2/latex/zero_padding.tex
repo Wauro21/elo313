@@ -1,0 +1,17 @@
+\section{Zero-Padding}
+	Sea la señal en tiempo discreto:
+	\begin{equation}
+				x[n] = \begin{cases}
+							cos\left( \frac{\pi n}{20} \right)  & \qquad : 0 \leq n \leq 99 \\
+							0  & \qquad : \text{E.O.C.}
+						\end{cases}
+	\end{equation}
+	
+	A partir de la señal, se calcula la DFT para $N = 100$ y $N = 400$, graficando la magnitud del resultado en el intervalo $\left[ -\pi , \pi \right]$:
+	\begin{figure}[H]
+		\center
+		\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/3_1.pdf}
+		\caption{Resultado de la magnitud, para la DFT de la señal para N = 100 y N = 400. }
+		\label{fig:3_1_mag_plot}
+	\end{figure}
+				

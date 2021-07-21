@@ -163,4 +163,34 @@
 		
 		Dado este resultado, es posible, a partir de la DFT de la señal x[n], encontrar la DFT de la señal y[n].
 		
-	\subsection{COMPLETAR}
+	\subsection{}
+	
+		Considere la DFT de $2N$ puntos de una señal x[n], por definición:
+		\begin{equation*}
+			X^{(2N)}(k) = \sum_{n=0}^{2N-1} x[n]\cdot e^{-j2\pi k n/2N}
+			\label{eq:2_5_dft_x}
+		\end{equation*}
+		
+		Considere, que el largo de la señal x[n] cumple la relación $2N = 2^{p}$, para cierto valor de $p$. Se puede aplicar el cálculo de la DFT mediante FFT con \textit{Radix-2}. Separando las muestras pares de las impares:
+		\begin{align*}
+			x_{0}[m] = x[2m] \qquad \underset{N}{\overset{DFT}{ \Longleftrightarrow }} \qquad X^{N}_{0}(k) \\
+			x_{1}[m] = x[2m +1] \qquad \underset{N}{\overset{DFT}{ \Longleftrightarrow }} \qquad X^{N}_{1}(k)
+		\end{align*}
+		
+		Separando en el cálculo de la DFT:
+		\begin{align*}
+			X^{(2N)}(k) = \sum_{m=0}^{N-1} x[2m]\cdot e^{-j2\pi k m/N} + \sum_{m=0}^{N-1} x[2m+1]\cdot e^{-j2\pi k (2m+1)/2N} \\
+			X^{(2N)}(k) = \sum_{m=0}^{N-1} x[2m]\cdot e^{-j2\pi k m/N} + \underbrace{e^{-j2\pi k/2N}}_{W_{(2N)}^{(k)}}\sum_{m=0}^{N-1} x[2m+1]\cdot e^{-j2\pi k m/N} \\			
+		\end{align*}
+		
+		\begin{equation*}
+			\therefore X^{(2N)}(k) = X_{0}^{N}(k) + W_{2N}^{k} \cdot X_{1}^{N} \qquad k = 0, 1, \dots, 2N-1
+		\end{equation*}
+		
+		Separando, dada la periodicidad en N, para corregir el índice k:
+		\begin{align}
+			X^{2N}(k) = X_{0}^{N}(k) + W_{2N}^{k} \cdot X_{1}^{N} \qquad k = 0, 1, \dots, N-1 \\
+			X^{2N}(k+N) = X_{0}^{N}(k) - W_{2N}^{k} \cdot X_{1}^{N} \qquad k = 0, 1, \dots, N-1
+		\end{align}
+		
+		De esta manera, se puede calcular la DFT de una secuencia de 2N puntos, mediante el cálculo de FFT de N puntos. 
