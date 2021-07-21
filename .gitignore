@@ -7,3 +7,8 @@
 # Ignore matlab temps
 
 **/*.asv
+
+# Ignore latex compilation files
+**/*.log
+**/*.aux
+**/*.gz
