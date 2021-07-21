@@ -1,0 +1,166 @@
+\section{Ejercicios de DTFT y DFT}
+	\subsection{} % Promedio movil
+		Considere el siguiente sistema:
+		\begin{equation}
+			y\left[ n \right] = \frac{1}{L+1} \sum_{k = 0}^{L} x(n-k)
+			\label{eq:2_1_average_system}
+		\end{equation}
+		
+		Aplicando \textsc{DTFT} sobre la ecuación \ref{eq:2_1_average_system}:
+		
+		\begin{equation}
+			Y(\omega) = \frac{1}{L+1} \sum_{k = 0}^{L} X(\omega) \cdot e^{-j\omega k} = \frac{1}{L+1} \cdot X(\omega) \cdot \underbrace{\sum_{k = 0}^{L} e^{-j\omega k}}_{\text{S}}
+			\label{eq:2_1_dtft}
+		\end{equation}
+		
+		Para el término \textit{S}, se analiza la convergencia de la serie geométrica:
+		
+		\begin{gather*}
+			S = \sum_{k = 0}^{L} e^{-j\omega k} = \frac{1 - e^{-j \omega (L+1)}}{1 - e^{-j \omega}} = \frac{e^{-j\omega \frac{L+1}{2}}}{e^{-j \frac{\omega}{2}}} \cdot \left( \frac{e^{j\omega \frac{L+1}{2}} - e^{-j\omega \frac{L+1}{2}}}{e^{j \omega/2} - e^{-j \omega /2}} \right) = e^{-j \omega L / 2} \left( \frac{sin \left( \frac{\omega}{2} (L+1) \right)}{sin \left( \frac{\omega}{2} \right) } \right) \\
+			\boxed{\therefore S = e^{-j \omega L /2} \cdot pSinc_{L+1}(\omega)} 
+		\end{gather*}
+		
+		Considerando este resultado, se puede expresar la ecuación \ref{eq:2_1_dtft}:
+		
+		\begin{equation}
+			H(\omega) = \frac{Y(\omega)}{X(\omega)} = \frac{e^{-j \omega L /2}}{L+1} \cdot pSinc_{L+1}(\omega)
+		\end{equation}
+		
+		De esta forma, se obtiene una expresión compacta para la respuesta en frecuencia (\textsc{DTFT}) del sistema. Graficando la magnitud y fase para la ecuación \ref{eq:2_1_dtft}, considerando el valor de $L=8$, se obtiene lo siguiente:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/2_1.pdf}
+			\caption{Magnitud y fase para \textsc{DTFT} encontrada: $H(\omega)$. Se marcaron los máximos de los gráficos con un marcador verde y los mínimos con un marcador azul}
+			\label{fig:2_1_plot}
+		\end{figure}
+		
+		Para hallar los máximos y mínimos mostrados en los gráficos, es conveniente analizar la expresión de la ecuación \ref{eq:2_1_dtft}:
+		\begin{equation*}
+			H(\omega) = \frac{1}{L+1} \cdot e^{-j \omega L /2} \cdot pSinc_{L+1}(\omega)
+		\end{equation*}	
+		
+		En el caso de la magnitud, el término exponencial puede ser ignorado, dado que este siempre contribuye con magnitud 1. Por lo que para analizar los máximos y mínimos de magnitud, sólo es conveniente analizar la función $pSinc$. Para esta, el primer máximo, se ubicará en $\omega = 0$, dado que es el punto donde ambas partes de la fracción que definen a la $pSinc$ se indefinen , y el resultado tiende a 1. Luego de este máximo, se tendrán máximos locales de acuerdo a los máximos del término $sin(9 \cdot \omega /2)$. Analizando la ocurrencia de máximos para el t término:
+		\begin{gather*}
+			\frac{9 \omega}{2} = \frac{pi}{2} \left( 1 + 2m \right) \Longleftrightarrow \omega_{max} = \frac{pi}{9} \left( 1 + 2m \right) \qquad m = 1,2,3 \dots
+		\end{gather*}
+		
+		Lo que entrega la posición de los máximos en el gráfico obtenido. Para los mínimos el desarrollo es análogo, considerando que ahora se debe analizar, para el mismo término, cuando este se haga cero:
+		\begin{gather*}
+			\frac{9 \omega}{2} = \pi m \Longleftrightarrow \omega_{min} = \frac{2\pi m}{9} \qquad m = 1,2,3,\dots
+		\end{gather*}		
+		Por lo que ahora se tiene la posición de los máximos y mínimos para la magnitud de $H(\omega)$. Para analizar los máximos y mínimos de fase, conviene considerar que el término de la $pSinc$, tendrá una contribución de fase cero, dentro de su lóbulo principal. Por lo que únicamente el término exponencial tendrá efecto sobre la fase del sistema. Dentro del lóbulo principal, como se puede ver en la figura \ref{fig:2_1_plot}, existe una fase lineal con pendiente $-L/2$. El máximo y mínimo para la fase, corresponden a los nulos que \textit{encierran} el lóbulo principal:
+		\begin{align*}
+			\omega_{min} = \frac{-2\pi}{9} \\
+			\omega_{max} = \frac{2\pi}{9}
+		\end{align*}
+		
+	\subsection{} % Conv circular y conv lineal.
+	
+	Se considera las señales de largo 6, x[n] y h[n], con sus transformadas discretas de Fourier de 7 puntos, $X^{(7)}(k)$ y $H^{(7)}(k)$. Se define la señal $Y(k) = X^{(7)}(k) \cdot H^{(7)}(k)$ y se calcula la inversa para obtener y[n]. Analizando la situación, es evidente que para realizar el cálculo de $Y(k)$ se está realizando una convolución en el tiempo. Sin embargo, como se está calculando en el dominio de la DFT, se está realizando una convolución circular, en la cual dado el largo utilizado aparecerá aliasing temporal. Para clarificar este hecho, es conveniente realizar el cálculo de y[n] mediante convolución lineal, considere:
+	
+	\begin{equation}
+		y[n] = \underbrace{x[n] * h[n]}_{\text{Largo 11}} = \{ y_{0}, y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, y_{8}, y_{9},y_{10} \} 
+		\label{eq:2_2_y_conv_lineal}
+	\end{equation}
+	
+	Ahora considere el caso donde se realiza convolución circular de 7 puntos (caso mediante uso de DFT):
+	\begin{equation}
+		\hat{y}[n] = x[n] \underset{7}{\circledast} h[n] = \underbrace{\{ y_{0}+y_{7}, y_{1}+y_{8}, y_{2}+y_{9}, y_{3}+y_{10}}_{\text{Aparece solapamiento}}, y_{4}, y_{5}, y_{6}\}
+		\label{eq:2_2_y_conv_circular}
+	\end{equation}
+	
+	En este caso, como se está usando un \textit{tamaño} inferior al necesario para la convolución lineal, las últimas 4 muestras, se solapan al aparecer la periodicidad de la convolución circular, distorsionando las primeras cuatro muestras. A partir de los resultados obtenidos en las ecuaciones \ref{eq:2_2_y_conv_lineal} y \ref{eq:2_2_y_conv_circular}, es claro que para $ n = \{ 4, 5, 6 \}$ el resultado de la convolución circular y lineal convergen a lo mismo. 
+	
+	\subsection{} % 
+		Considere la secuencia finita: 
+			\begin{equation}
+				x[n] = \delta[n-2] + \delta[n-4]
+				\label{2_3_finite_seq}
+			\end{equation}
+			
+			\subsubsection{Cálculo de la DFT de 8 puntos}
+				Sabiendo que un \textit{delay} temporal se traduce en un desfase en frecuencia, se encuentra la DFT de 8 puntos de la secuencia:
+				\begin{equation}
+					X^{(8)}(k) = 1 \cdot e^{\frac{-j2\pi k 2}{8}} + 1 \cdot e^{\frac{-j2\pi k 4}{8}} = e^{-jpi k /2} + e^{-jpi k}
+					\label{eq:2_3_1_dft}
+				\end{equation}
+				
+			\subsubsection{Desfase de la DFT}
+				Considere la siguiente señal:
+					\begin{equation}
+						Y^{(8)}(k) = e^{j2\pi k 2 / 8} \cdot X^{(8)}(k)
+						\label{eq:2_3_2_desfase}
+					\end{equation}
+				Para encontrar la secuencia que entrega esta transformada, se puede tomar la misma idea que se usó para calcular la DFT de la señal x[n], un retardo en el tiempo se traduce como un desfase en frecuencia, por lo que el término exponencial, lo que hace es desplazar la señal original en dos muestras hacia la izquierda:
+				\begin{equation}
+					y[n] = x[n + 2] = \delta[n] + \delta[n-2]
+				\end{equation}
+				
+				Note, que se podría haber realizado la multiplicación término a término en la ecuación \ref{eq:2_3_2_desfase} y luego calcular la inversa del resultado y se habría llegado a la misma expresión. 
+			
+			\subsubsection{Encontrar la siguiente secuencia}
+				Sea la señal definida como:
+				\begin{equation}
+					Y^{(8)}(k) = X^{(8)}(k) \cdot W^{(8)}(k)
+					\label{eq:2_3_3_Y}
+				\end{equation}
+				
+				Donde se define:
+				\begin{equation}
+				w[n] = \begin{cases}
+							1  & \qquad 0 \leq n \leq 5 \\
+							0  & \qquad \text{E.O.C.}
+						\end{cases}
+				\end{equation}
+				
+				Note que en la ecuación \ref{eq:2_3_3_Y}, se está realizando una convolución circular en el tiempo, sin embargo, no se está respetando el \textit{tamaño} necesario para realizarla ($ 15 $), por lo que el resultado presentará \texttt{aliasing-temporal}. Definiendo convenientemente la señal w[n]:
+				 \begin{equation*}
+				 	w[n] = \{1,1,1,1,1,1,0,0\}
+				 \end{equation*}
+				 
+				 Y realizando la convolución circular para obtener la secuencia y[n]:
+				 \begin{equation}
+				 	y[n] = x[n] \underset{8}{\circledast} w[n] = \{1,1,1,1,2,2,2,2\} 
+				 \end{equation}
+				
+				Para comprobar la aparición de este \texttt{aliasing-temporal} se puede realizar la convolución lineal de largo 15 de ambas señales:
+				\begin{equation}
+				\hat{y}[n] = x[n] * w[n] =  \{ 0,0,1,1,2,2,2,2,\underbrace{1,1,0,0,0,0,0 }_{\text{Señal que se dobla}} \}
+				\end{equation}
+				
+				A partir de este resultado, se puede ver, que en el caso limitado a 8 muestras, las últimas 7 muestras aparecerán al comienzo como doblaje en el tiempo. 
+				
+
+	\subsection{} %Blackman window
+		Se considera la siguiente definición para la ventana de Blackman:
+		\begin{equation}
+			w[n] = a_{0} - a_{1}cos\left(\frac{2\pi n}{N} \right) + a_{2}cos\left(\frac{4\pi n}{N} \right)
+			\label{eq:2_4_blackman_def}
+		\end{equation}
+		
+		Con las siguientes constantes:
+		\begin{gather*}
+			a_{0} = \frac{1-\alpha}{2} \\
+			a_{1} = 0.5 \\
+			a_{2} = \frac{\alpha}{2} \\
+			\alpha = 0.16
+		\end{gather*}
+		
+		Sea la señal buscada:
+		\begin{equation}
+			y[n] = x[n] \cdot w[n] \underset{N}{\overset{DFT}{ \Longleftrightarrow }} Y^{(N)}(k) = X^{(N)}(k) \underset{N}{\circledast} W^{(N)}(k)
+		\end{equation}
+		
+		Calculando la transformada de w[n], utilizando la identidad del coseno:
+		\begin{equation}
+			W^{(N)}(k) = N \left( a_{o}\delta(k) - \frac{a_{1}}{2} \left[ \delta(k-1) + \delta(k-(N-1)) \right] + \frac{a_{2}}{2} \left[ \delta(k-2) + \delta(k-(N-2)) \right] \right)
+		\end{equation}
+		
+		Volviendo a la expresión original:
+		\begin{equation*}
+		Y^{(N)}(k) = N \left( a_{o}X^{(N)}(k) - \frac{a_{1}}{2} \left[ X^{(N)}(k-1) + X^{(N)}(k-(N-1)) \right] + \frac{a_{2}}{2} \left[ X^{(N)}(k-2) + X^{(N)}(k-(N-2)) \right] \right)
+		\end{equation*}
+		
+		Dado este resultado, es posible, a partir de la DFT de la señal x[n], encontrar la DFT de la señal y[n].
+		
+	\subsection{COMPLETAR}
