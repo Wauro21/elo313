@@ -326,21 +326,21 @@ name = "4_2_f"
 figure
 	% cos
 	subplot(3,1,1)
-		plot(k, abs(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, abs(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Magnitud")
 		title("DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
 		grid on
 		xlim([-pi, pi])
 	subplot(3,1,2)
-		plot(k, real(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, real(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte real DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
 		grid on
 		xlim([-pi, pi])
 	subplot(3,1,3)
-		plot(k, imag(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, imag(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte imaginaria DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
@@ -449,14 +449,14 @@ name = "4_2_i"
 figure
 	% cos
 	subplot(3,1,1)
-		plot(k, abs(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, abs(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Magnitud")
 		title("DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
 		grid on
 		xlim([-pi, pi])
 	subplot(3,1,2)
-		plot(k, real(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, real(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte real DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
@@ -464,7 +464,7 @@ figure
 		xlim([-pi, pi])
 		ylim([-200,200])
 	subplot(3,1,3)
-		plot(k, imag(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, imag(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte imaginaria DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
@@ -577,21 +577,21 @@ name = "4_2_l"
 figure
 	% cos
 	subplot(3,1,1)
-		plot(k, abs(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, abs(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Magnitud")
 		title("DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
 		grid on
 		xlim([-pi, pi])
 	subplot(3,1,2)
-		plot(k, real(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, real(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte real DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
 		grid on
 		xlim([-pi, pi])
 	subplot(3,1,3)
-		plot(k, imag(Y2), "color",Colors(1,:),"linewidth",1.15)
+		plot(k, imag(Y2), "color",Colors(2,:),"linewidth",1.15)
 		xlabel("Frecuencia normalizada \textit{rad/s}","Interpreter","latex")
 		ylabel("Amplitud")
 		title("Parte imaginaria DFT señal y2[n] = x2[n] \cdot w[n]","Interpreter","tex")
