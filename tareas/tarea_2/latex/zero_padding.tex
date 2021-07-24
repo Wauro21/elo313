@@ -14,4 +14,5 @@
 		\caption{Resultado de la magnitud, para la DFT de la señal para N = 100 y N = 400. }
 		\label{fig:3_1_mag_plot}
 	\end{figure}
-				
+	
+	Note que la magnitud de los resultados para ambos casos, han sido normalizados por la duración de la señal ($1/100$). Se puede ver, que el caso de $N = 400$ se acerca más a lo que se espera de la \textsc{DTFT}, esto se puede explicar debido a que se está aumentando \textit{la resolución} de la \textsc{DFT} de forma aparente. Al aumentar el largo total de la señal, aunque no se esté aumentando efectivamente el largo de la información (duración de la señal cosenoidal), la cantidad de puntos que podrá tomar el índice de frecuencias $k$ aumentará cuatro veces. Note que el efecto de aumentar el largo total de la señal no implica que se tenga más información, el efecto de la mejora en la resolución viene del resultado de la interpolación realizada entre los puntos. Tomando esta idea, 

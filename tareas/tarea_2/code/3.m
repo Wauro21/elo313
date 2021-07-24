@@ -42,7 +42,6 @@ N = [1000, 5000, 10000, 20000];
 name = "3_2"
 figure
 	for i= 1:1:4
-		N(i)
 		k = ((0:1:N(i)-1)-N(i)/2)*2*pi/N(i);
 		X_temp = fftshift(fft([x zeros(1, N(i)-100)],N(i)));
 		subplot(2,2,i)
