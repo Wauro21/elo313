@@ -95,6 +95,7 @@
 			\center
 			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_0.pdf}
 			\caption{Respuesta en magnitud y fase para el filtro}
+			\label{fig:mag_phase_p_0}
 		\end{figure}
 		
 		A partir de las respuestas del filtro, se puede ver que en términos de magnitud, tiene un rechazo relativamente lento, con la banda de paso no plana. En términos de la fase, se puede ver que se tiene un desfase lineal deseable. Aplicando el filtro a la señal:
@@ -114,10 +115,39 @@
 			\label{fig:ecg_filtered_0_comparative}
 		\end{figure}
 		
+		Considere ahora, que se añaden dos polos a la frecuencia de rechazo, con un radio $r \in [0,8  - 0,99]$. A partir de esto, se escogen tres valores para $r = 0.8, r = 0.9, r = 0.99$. Implementando los filtros y comparando su respuesta en magnitud y frecuencia:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_208.pdf}
+			\caption{Respuesta del filtro, para r = 0.8}
+			\label{fig:ecg_filter_r_08}
+		\end{figure}
+
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_209.pdf}
+			\caption{Respuesta del filtro, para r = 0.9}
+			\label{fig:ecg_filter_r_09}
+		\end{figure}		
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_2099.pdf}
+			\caption{Respuesta del filtro, para r = 0.99}
+			\label{fig:ecg_filter_r_099}
+		\end{figure}
+		
+		A partir de estos resultados, se puede comprobar que a medida que el valor de $r$, se acerca al círculo unitario, la banda de rechazo se hace mas angosta, acercándose lo más posible a la respuesta ideal de un filtro \textit{notch}, sin embargo, esta mejora en el rechazo del filtro, trae consigo que la fase, que inicialmente era ``perfectamente'' lineal, se empieza a curvar en torno a la banda de rechazo. Por lo tanto al construir el filtro, se debe tener en cuenta la aplicación final, dado que determinará si es factible tener un mejor rechazo a costa de una fase no lineal. La mejora en el rechazo del filtro, se puede explicar, si consideramos que un cero anula la función de transferencia, mientras que un polo la \textit{indefine}, por lo que entre mas cerca esté el polo del cero, la recuperación de la anulación en el espectro será mejor y más rápida, dando un filtro más selectivo. Otro punto a destacar, es que a medida que el valor de r se acerca al círculo unitario, la respuesta en magnitud se hace más plana, eliminando la curvatura del espectro que se tenía para el filtro con polos en cero, figura \ref{fig:mag_phase_p_0}. Tomando el caso para $r = 0.99$, se filtra la señal ECG entregada, obteniéndose el siguiente resultado:
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/egc_f_2_comparative.pdf}
+			\caption{Resultado de filtraje, para r = 0.99}
+			\label{fig:ecg_filter_r_099_result}
+		\end{figure}
+		
+		A partir de esto, se puede comprobar, que se tiene un mejor filtrado de la señal, y que el efecto causado por la fase no lineal, no es apreciable. La respuesta más plana en frecuencia, permite que el filtro siga de manera más cercana la señal original, sin tener efectos de amplificación, como en el caso de polos en cero. Por lo que para esta aplicación el filtro diseñado para $r = 0.99$ es una buena solución. 
 		
 		
-		
-		Considere ahora, que se añaden dos polos a la frecuencia de rechazo, con un radio $r \in [0,8  - 0,9]$. A partir de esto, se escogen los casos extremos para analizar:
-		 
 	
 	
