@@ -240,4 +240,60 @@ print(plotPath+name,'-dpdf','-bestfit');
 
 %% ECG_LFN
 clc, clear, close all;
-ecg = load("../rsrc/ecg_lfn.dat")
+Colors = [  hex2dec('fd') hex2dec('3c') hex2dec('3c');
+            hex2dec('06') hex2dec('12') hex2dec('83');
+            hex2dec('ff') hex2dec('b7') hex2dec('4c');
+            hex2dec('13') hex2dec('8d') hex2dec('90');
+            hex2dec('00') hex2dec('00') hex2dec('00')]/255;
+plotPath="../plots/";
+ecg = load("../rsrc/ecg_lfn.dat");
+fs = 1000;
+fc = [0.5, 5];
+fc_l = ["05","5"];
+n = [2, 8];
+cont = 0;
+for n_i = n
+	for fc_i = fc
+		cont = cont + 1;
+		wnc = fc_i/(fs/2);
+		[b,a] = butter(n_i,wnc,"high");
+		[h,w] = freqz(b,a);
+		name = "1_c_filter_butter_"+int2str(n_i)+"_freq_"+fc_l(cont);
+		figure
+			sgtitle("Filtro Butterworth, n ="+int2str(n_i)+" fc ="+num2str(fc_i)+" Hz") 
+			subplot(2,1,1)
+				plot(w, db(h),"color",Colors(1,:),"linewidth",1.15)
+				title("Magnitud de filtro")
+				xlabel("Frecuencia normalizada")
+				ylabel("Magnitud dB")
+				xlim([0, 0.5])
+				grid on
+			subplot(2,1,2)
+				plot(w, unwrap(angle((h))),"color",Colors(2,:),"linewidth",1.15)
+				title("Fase del filtro")
+				xlabel("Frecuencia normalizada")
+				ylabel("Fase rad")
+				xlim([0, 0.5])
+				grid on
+		cfg.PaperPositionMode = 'auto';
+		print(plotPath+name,'-dpdf','-bestfit');
+		
+		f_ecg = filter(b,a, ecg);
+		name = "1_c_ecg_filtered_"+int2str(n_i)+"_freq_"+fc_l(cont);
+		figure
+			plot([0:1:length(ecg)-1], ecg,"color",Colors(1,:),"linewidth",1.15)
+			xlabel("Muestras")
+			ylabel("Amplitud")
+			title("Comparacion resultados")
+			axis tight
+			grid on
+			hold on
+			plot([0:1:length(f_ecg)-1], f_ecg,"color",Colors(2,:),"linewidth",1.15)
+			hold off
+			legend(["Señal original", "Señal filtrada"]);
+		cfg.PaperPositionMode = 'auto';
+		print(plotPath+name,'-dpdf','-bestfit');
+
+	end
+	cont = 0;
+end

@@ -13,4 +13,11 @@ plot(t, ecg)
 axis tight;
 xlabel('Time in seconds');
 ylabel('ECG');
+grid on
 
+figure
+X = fftshift(fft(ecg));
+w = ([0:1:length(ecg)-1] - length(ecg)/2)/length(ecg);
+plot(2*pi*w, db(X))
+xlim([-pi,pi])
+grid on

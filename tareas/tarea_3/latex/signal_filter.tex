@@ -148,6 +148,65 @@
 		
 		A partir de esto, se puede comprobar, que se tiene un mejor filtrado de la señal, y que el efecto causado por la fase no lineal, no es apreciable. La respuesta más plana en frecuencia, permite que el filtro siga de manera más cercana la señal original, sin tener efectos de amplificación, como en el caso de polos en cero. Por lo que para esta aplicación el filtro diseñado para $r = 0.99$ es una buena solución. 
 		
+	\subsection{Filtrado de ECG con variación DC}
+		A partir de la señal \texttt{ecg\_lfn}, se deben construir filtros de orden $n = \{2,8 \}$ con frecuencias $f = \{0.5 \quad 5\}$~Hz. Se procede a implementar los filtros pedidos y analizar su respuesta en frecuencia:
 		
-	
-	
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_filter_butter_2_freq_05.pdf}
+			\caption{Respuesta en frecuencia de filtro de orden n = 2, fc = 0.5}
+			\label{fig:1_c_n2_fc_05}
+		\end{figure}
+
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_filter_butter_2_freq_5.pdf}
+			\caption{Respuesta en frecuencia de filtro de orden n = 2, fc = 5}
+			\label{fig:1_c_n2_fc_5}
+		\end{figure}	
+
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_filter_butter_8_freq_05.pdf}
+			\caption{Respuesta en frecuencia de filtro de orden n = 8, fc = 0.5}
+			\label{fig:1_c_n8_fc_05}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_filter_butter_8_freq_5.pdf}
+			\caption{Respuesta en frecuencia de filtro de orden n = 8, fc = 5}
+			\label{fig:1_c_n8_fc_5}
+		\end{figure}
+		
+		Con la respuesta de los filtros, se puede identificar que para orden pequeño $n = 2$, mover la frecuencia de corte más cerca o lejos de cero, impacta en la capacidad del filtro de rechazar la banda DC, para el caso de $fc = 0.5$, la respuesta es muy similar a un filtro \textit{notch} figura \ref{fig:1_c_n2_fc_05}, sin embargo, la atenuación alcanza aproximadamente 0.3 \textit{dB}, lo cual no es un rechazo considerable. Al mover la frecuencia a $fc = 5$, el filtro es más capaz de rechazar la banda DC figura \ref{fig:1_c_n2_fc_5}, alcanzando un rechazo de 30 \textit{dB}, aproximadamente 100 veces mejor que en el primer caso. Esto, a su vez, trae consigo que la curva de desfase, se extienda, por lo que el filtro con $fc = 5$ tiene un sector de fase no lineal mayor que en el caso de $fc = 0.5$. Para orden mayor, $n = 8$, cuando la frecuencia de corte, es muy cercana a la banda de rechazo, $fc = 0.5$, se tiene que el filtro se vuelve inestable, teniendo una respuesta la cual no es de un filtro rechaza banda, como se ve en la figura \ref{fig:1_c_n8_fc_05}, donde se puede ver que la respuesta del filtro es un overshoot del espectro en una banda cercana a los 0 Hz. Para una frecuencia mayor, $fc =5$, se tiene que la respuesta es muy similar que el filtro de orden n = 2 y $fc=05$, sin embargo, este tiene la ventaja de tener una zona de fase no lineal con una pendiente mas suave, lo que implicaría cambios menos abruptos en la fase para las bandas cercanas a la de rechazo, como se ve en la figura \ref{fig:1_c_n8_fc_5}. Analizando los resultados de filtrado para cada filtro:
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_ecg_filtered_2_freq_05.pdf}
+			\caption{Resultado para filtro de orden n = 2, fc = 0.5}
+			\label{fig:1_c_filter_n2_fc_05}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_ecg_filtered_2_freq_5.pdf}
+			\caption{Resultado para filtro de orden n = 2, fc = 5}
+			\label{fig:1_c_filter_n2_fc_5}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_ecg_filtered_8_freq_05.pdf}
+			\caption{Resultado para filtro de orden n = 8, fc = 0.5}
+			\label{fig:1_c_filter_n8_fc_05}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/1_c_ecg_filtered_8_freq_5.pdf}
+			\caption{Resultado para filtro de orden n = 8, fc = 5}
+			\label{fig:1_c_filter_n8_fc_5}
+		\end{figure}
+		
+		A partir de estos resultados, se puede confirmar lo expuesto anteriormente el mejor resultado de filtrado, se obtiene para $n= 2$, y $fc = 0.5$, como se ve en la figura \ref{fig:1_c_filter_n2_fc_05}, dado que es el que mejor permite recuperar la señal sin causar distorsión evidente a la señal. Si bien el resultado obtenido en la figura \ref{fig:1_c_filter_n8_fc_5}, pareciera ser bueno, el segundo peak esperado para la señal ECG, se ve bastante atenuado en comparación a la señal original. Para el caso de la figura \ref{fig:1_c_filter_n2_fc_5}, se puede ver una evidente distorsión del segundo peak de la señal. Finalmente como se esperaba, para el filtro $n=8$ y $fc = 0.5$, hay completa destrucción de la señal, figura \ref{fig:1_c_filter_n8_fc_05}. Por lo que podemos concluir que para esta señal, lo más importante es preservar la fase de la señal original, y no tanto la atenuación de la banda DC, lo que concuerda con el filtro, de la figura \ref{fig:1_c_filter_n2_fc_05}. 
