@@ -57,5 +57,67 @@
 			y(z) = 0.9 \cdot y\left[ n - 1 \right] + 0.95 \left( x\left[ n - 1 \right] - x\left[n \right] \right)
 		\end{align}
 		
+		\textcolor{red}{TERMINAR DEMOSTRACIONES - VERIFICAR}
 		
-			
+		 Considere ahora, que se tiene como entrada del filtro definido en \ref{eq:1_transfer_function_normal}:
+		 \begin{equation*}
+		 	x[n] = 2 \cdot cos \left( \frac{\pi}{6}n + \frac{\pi}{4} \right)
+		 \end{equation*}
+		 
+		Como se sabe, la expresión tiene una única frecuencia fundamental en $\pm \pi/6$. De esta forma, para el filtro diseñado en el punto anterior, basta evaluar únicamente el efecto de la atenuación y desfase para la frecuencia de la señal de entrada. De esta forma:
+		\begin{align}
+			|H(\pi/6)| = 0.95 \cdot \left| \frac{e^{j\pi/6} - 1}{e^{j\pi/6} - 0.9} \right| = 0.9812 \\
+			\angle H(\pi/6) = arctan\left( 0.95 \cdot \frac{e^{j\pi/6} - 1}{e^{j\pi/6} - 0.9} \right) = 0.1940~\text{rad} 
+		\end{align}
+		
+		De esta forma, se puede obtener la salida:
+		\begin{equation}
+			y[n] = \sqrt(2) \cdot 0.9812 \cdot cos \left( \frac{\pi n}{6} + \frac{\pi}{4} + 0.1940 \right)
+		\end{equation}
+		
+	\subsection{Filtraje señal electrocardiograma}
+		Se pide diseñar un filtro con dos ceros, para el filtraje de una señal ECG muestreada a 200~Hz, con ruido en la banda de 60~Hz. Analizando la señal:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_time_freq.pdf}
+			\caption{Señal muestreada, en el dominio temporal y de frecuencia}
+			\label{fig:ecg_time_freq}
+		\end{figure}		
+				
+		Se puede ver claramente, las bandas de ruido presentes. Se propone la siguiente estructura para el filtro:
+		\begin{align}
+			\omega_{r} = \frac{2\pi 60}{200} = 0.6\pi \\
+			H(z) = \frac{(z-e^{j\omega_r})(z-e^{-j\omega_r})}{z^{2}} = \frac{z^{2} + 2cos(\omega_{r}) + 1}{z^{2}}
+		\end{align}
+		
+		Realizando la implementación en \textsc{Matlab}, se puede obtener la magnitud y fase del filtro:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_0.pdf}
+			\caption{Respuesta en magnitud y fase para el filtro}
+		\end{figure}
+		
+		A partir de las respuestas del filtro, se puede ver que en términos de magnitud, tiene un rechazo relativamente lento, con la banda de paso no plana. En términos de la fase, se puede ver que se tiene un desfase lineal deseable. Aplicando el filtro a la señal:
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/ecg_poles_0_filtered.pdf}
+			\caption{Resultado del filtraje de la señal}
+			\label{fig:ecg_filtered_0}
+		\end{figure}
+		
+		Se puede ver que el proceso de filtrado ha sido exitoso, permitiendo remover la banda con ruido de la señal. Se puede ver una cierta \textit{amplificación} de ciertas bandas, dada la forma no plana del filtro, el espectro se tendió a \textit{curvar}. En términos de fase, se puede ver que el efecto del filtro sobre ésta, es el esperado, dada la fase lineal del filtro. Realizando una comparación directa de ambas señales:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plots/egc_f_0_comparative.pdf}
+			\caption{Comparación de las señales}
+			\label{fig:ecg_filtered_0_comparative}
+		\end{figure}
+		
+		
+		
+		
+		Considere ahora, que se añaden dos polos a la frecuencia de rechazo, con un radio $r \in [0,8  - 0,9]$. A partir de esto, se escogen los casos extremos para analizar:
+		 
+	
+	
