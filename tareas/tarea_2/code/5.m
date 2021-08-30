@@ -8,7 +8,7 @@ Colors = [  hex2dec('fd') hex2dec('3c') hex2dec('3c');
 rsrc_path = "../rsrc/";
 plotPath = "../plot_out/";
 [x,fs] = audioread(rsrc_path+"music.wav");
-% Obtencion resputa a impulso de filtro h[n]
+% Obtencion respuesta a impulso de filtro h[n]
 N = 16;
 h = zeros(1,N);
 for i=1:1:N

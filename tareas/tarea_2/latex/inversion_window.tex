@@ -1,0 +1,110 @@
+\section{Inversión de DFT y Efecto de Ventanas}
+	Considere las señales:
+	\begin{align}
+		x_{1}(t) = sin( \omega t)\\
+		x_{2}(t) = cos( \omega t) 
+	\end{align}
+	
+	Para ambas señales, se obtiene la \textsc{DFT} e inmediatamente se calcula la inversa de la misma, para recuperar $x_{i}[n]$. Para la reconstrucción se consideran los siguientes largos: $N = \{ 256, 800, 4096 \}$:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_1_a.pdf}
+			\caption{Resultado de la reconstrucción de la señal, para diversos largos $N$}
+			\label{fig:4_ns}
+		\end{figure}
+		
+	A partir de los resultados obtenidos, se puede apreciar que para valores de $N$ menores al largo de la señal, la reconstrucción de la misma mediante \textsc{iDFT}, solo es capaz de reconstruir los valores considerados al momento del cálculo de la \textsc{DFT}. Esto se explica, dado que al considerar un largo menor al de la señal, la información que no alcanza a ser cubierta se descarta, lo que conlleva a \textit{distorsionar la señal original}, dando lugar a una nueva señal, la cual posee menos muestras. En el caso donde $N$ sea mayor que el largo de la señal, se utiliza \textit{zero-padding}, para cubrir las muestras no-existentes, dando lugar a la señal original con un soporte de ceros en alguno de sus extremos (en este caso, a la derecha). A continuación se procede a realizar el efecto de eventanar las señales, considerando un largo $N = 800$, utilizando una ventana \texttt{Blackman} y una \texttt{rectwin}: 
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_a.pdf}
+			\caption{Resultado del enventanamiento de la señal con una ventana \texttt{Blackman}, considerando un largo $N = 800$}
+			\label{fig:4_sample_blackman_800}
+		\end{figure}
+		
+		
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_b.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{1}[n]$ con una ventana \texttt{Blackman}, considerando un largo $N = 800$}
+			\label{fig:4_blackman_800_1}
+		\end{figure}
+		
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_c.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{2}[n]$ con una ventana \texttt{Blackman}, considerando un largo $N = 800$}
+			\label{fig:4_blackman_800_2}
+		\end{figure}
+		
+		Note que para ambos casos, la representación de los espectros resultantes es acorde a lo esperado para cada señal. Repitiendo el mismo procedimiento para las señales, pero considerando un largo $N = 256$, se obtienen los siguientes resultados:
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_d.pdf}
+			\caption{Resultado del enventanamiento de la señal con una ventana \texttt{Blackman}, considerando un largo $N = 256$}
+			\label{fig:4_sample_blackman_256}
+		\end{figure}	
+	
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_e.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{1}[n]$ con una ventana \texttt{Blackman}, considerando un largo $N = 256$}
+			\label{fig:4_blackman_256_1}
+		\end{figure}	
+			
+			De inmediato se puede ver que esta operación de enventanamiento, ha introducido una distorsión a la señal, dado que para una señal sinusoidal no se espera que tenga una componente real en su espectro. 
+
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_f.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{2}[n]$ con una ventana \texttt{Blackman}, considerando un largo $N = 256$}
+			\label{fig:4_blackman_256_2}
+		\end{figure}	
+			
+			Para el caso de la señal cosenoidal, el efecto de distorsión es el mismo, en el espectro aparece una componente imaginaria que no se condice con lo esperado de forma teórica. Repitiendo los casos recién estudiados, para una ventana de tipo \texttt{rectwin} de largo $N = 800$:
+						
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_g.pdf}
+			\caption{Resultado del enventanamiento de la señal con una ventana \texttt{rectwin}, considerando un largo $N = 800$}
+			\label{fig:4_sample_rectwin_800}
+		\end{figure}	
+	
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_h.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{1}[n]$ con una ventana \texttt{rectwin}, considerando un largo $N = 800$}
+			\label{fig:4_rectwin_800_1}
+		\end{figure}	
+			
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_i.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{2}[n]$ con una ventana \texttt{rectwin}, considerando un largo $N = 800$}
+			\label{fig:4_rectwin_800_2}
+		\end{figure}	
+			
+			
+			Note que los resultados obtenidos con esta ventana, se acercan \textbf{bastante} a lo esperado de forma teórica, para una señal infinita. El \textit{ancho} real que deben poser los deltas, son más angostos que en el caso de la ventana de \texttt{Blackman}. Repitiendo, para la misma ventana, pero $N = 256$:
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_j.pdf}
+			\caption{Resultado del enventanamiento de la señal con una ventana \texttt{rectwin}, considerando un largo $N = 256$}
+			\label{fig:4_sample_rectwin_256}
+		\end{figure}	
+	
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_k.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{1}[n]$ con una ventana \texttt{rectwin}, considerando un largo $N = 256$}
+			\label{fig:4_rectwin_256_1}
+		\end{figure}	
+			
+	\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/4_2_l.pdf}
+			\caption{Resultado en frecuencia del enventanamiento de la señal $x_{2}[n]$ con una ventana \texttt{rectwin}, considerando un largo $N = 256$}
+			\label{fig:4_rectwin_256_2}
+		\end{figure}	
+		
+		Note que para este caso, nuevamente aparece distorsión en ambas señales, sin embargo, también para el caso de esta ventana se puede notar que existe más \textit{leackeage} de las frecuencias aledañas en la distorsión, que en el caso de la ventana de \texttt{Blackman}. Se ha perdido resolución. A partir de lo observado, se puede llegar a las siguientes conclusiones. En el caso de tener $N=800$, lo que permite tener una buena resolución de la señal, convendría utilizar una ventana rectangular dado que permite tener un espectro que se asemeja más a la DTFT de las señales. Por otro lado, si se trabaja con $N=256$, la ventana de \texttt{Blackman} es más robusta al \textit{leackeage}, permitiendo compensar la pérdida de resolución al disminuir la cantidad de puntos.
+			

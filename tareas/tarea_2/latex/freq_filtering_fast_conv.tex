@@ -1,0 +1,48 @@
+\section{Filtrado en Frecuencia y Convolución Rápida}
+	Utilizando la señal \texttt{acc.wav}, se realiza un filtrado en frecuencia utilizando el filtro definido en la ecuación \ref{eq:5_phase}. Graficando el resultado:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/6_a_freq_filt.pdf}
+			\caption{Resultado de filtraje de la señal por multiplicación en frecuencia.}
+		\end{figure}	
+		
+		Realizando la comparación, con filtros implementados a través de ecuación de diferencias y convolución:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/6_a_diff_filt.pdf}
+			\caption{Resultado de filtraje de la señal mediante ecuación de diferencias.}
+			\label{fig:6_a_diff_filt}
+		\end{figure}	
+
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/6_a_conv_filt.pdf}
+			\caption{Resultado de filtraje de la señal mediante convolución.}
+			\label{fig:6_a_conv_filt}
+		\end{figure}			
+		
+		Tabulando los tiempos registrados para el cálculo de cada método:
+		\begin{table}[H]
+			\center
+			\begin{tabular}{|c|c|}
+				\hline
+				\textbf{Método} & \textbf{Tiempo} \textit{s} \\
+				\hline
+				FFT &  3.35 \\
+				\hline
+				Ec.Diferencias & 6.6 \\
+				\hline
+				Convolución & 0.17 \\
+				\hline
+			\end{tabular}
+		\end{table}
+		
+		Graficando el error entre el resultado obtenido mediante multiplicación en frecuencia y convolución:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/6_a_error.pdf}
+			\caption{Error entre señal obtenida mediante multiplicación en frecuencia y señal obtenida mediante convolución}
+			\label{fig:6_a_error}
+		\end{figure}			
+		
+		Se puede ver que el error es del orde de $10^{-4}$ por lo que puede considerarse despreciable.

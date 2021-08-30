@@ -5,6 +5,7 @@
 							cos\left( \frac{\pi n}{20} \right)  & \qquad : 0 \leq n \leq 99 \\
 							0  & \qquad : \text{E.O.C.}
 						\end{cases}
+						\label{eq:3_signal}
 	\end{equation}
 	
 	A partir de la señal, se calcula la DFT para $N = 100$ y $N = 400$, graficando la magnitud del resultado en el intervalo $\left[ -\pi , \pi \right]$:
@@ -15,4 +16,31 @@
 		\label{fig:3_1_mag_plot}
 	\end{figure}
 	
-	Note que la magnitud de los resultados para ambos casos, han sido normalizados por la duración de la señal ($1/100$). Se puede ver, que el caso de $N = 400$ se acerca más a lo que se espera de la \textsc{DTFT}, esto se puede explicar debido a que se está aumentando \textit{la resolución} de la \textsc{DFT} de forma aparente. Al aumentar el largo total de la señal, aunque no se esté aumentando efectivamente el largo de la información (duración de la señal cosenoidal), la cantidad de puntos que podrá tomar el índice de frecuencias $k$ aumentará cuatro veces. Note que el efecto de aumentar el largo total de la señal no implica que se tenga más información, el efecto de la mejora en la resolución viene del resultado de la interpolación realizada entre los puntos. Tomando esta idea, 
+	Note que la magnitud de los resultados para ambos casos, han sido normalizados por la duración de la señal ($1/100$). Se puede ver, que el caso de $N = 400$ se acerca más a lo que se espera de la \textsc{DTFT}, esto se puede explicar debido a que se está aumentando \textit{la resolución} de la \textsc{DFT} de forma aparente. Al aumentar el largo total de la señal, aunque no se esté aumentando efectivamente el largo de la información (duración de la señal cosenoidal), la cantidad de puntos que podrá tomar el índice de frecuencias $k$ aumentará cuatro veces. Note que el efecto de aumentar el largo total de la señal no implica que se tenga más información, el efecto de la mejora en la resolución viene del resultado de la interpolación realizada entre los puntos. Tomando esta idea, se podría a priori pensar que aumentar el largo total de la señal, se traduce en una mejor representación de la señal en el dominio de frecuencia, sin embargo, el caso no es así. A continuación se calcula y gráfica la DFT de la misma señal, con largos $ N = \{ 1000, 5000, 10000, 20000 \}$:
+	\begin{figure}[H]
+		\center
+		\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/3_2.pdf}
+		\caption{Resultado de la magnitud, para la DFT de la señal para diversos largos $N$}
+		\label{fig:3_2_ns}
+	\end{figure}
+	
+	Como se puede ver, el efecto de seguir aumentando el valor de $N$ no implica directamente una mejora directa de la representación del espectro de la señal. Los gráficos en la figura \ref{fig:3_2_ns}, no muestran una diferencia significativa con los resultados encontrados para el caso de $N = 400$, en la figura \ref{fig:3_1_mag_plot}. Esto se debe al enventanamiento que presenta la señal definida en la ecuación \ref{eq:3_signal}, el cual se podría representar de la siguiente manera:
+	\begin{equation}
+		x[n] = cos(\pi n /20) \cdot w[n]
+	\end{equation}
+	
+	Donde la ventana $w[n]$ se define como:
+	\begin{equation}
+		w[n] = \begin{cases}
+							1  & \qquad : 0 \leq n \leq 99 \\
+							0  & \qquad : \text{E.O.C.}
+						\end{cases}
+						\label{eq:3_signal}
+	\end{equation}
+	
+	Esta ventana limita la cantidad de información que se utiliza para determinar el espectro, si en vez de aumentar el largo de la señal $N$, se aumentará la duración de la ventana, permitiendo añadir más muestras de la señal cosenoidal, lo que mejoraría la representación del espectro. Si el ancho de la ventana tendiera a infinito, se lograría obtener la representación obtenido mediante \textsc{DTFT}. Para escoger un valor de N, que permita determinar de buena manera el espectro, un criterio es utilizar \textbf{al menos} el largo de la señal muestreada, cualquier valor inferior al propio largo de la señal, implicará que muestras fueron descartadas y la estimación del espectro no será \textit{la mejor} representación de la señal capturada. Formalizando, donde $L_{N}$ corresponde al largo de la señal muestreada:
+	\begin{equation}
+		N \geq L_{N}
+	\end{equation}
+	
+	Este es el valor mínimo, para poder representar el espectro, cualquier valor sobre esta cota, \textit{mejorará} la interpolación de los puntos obtenidos. 

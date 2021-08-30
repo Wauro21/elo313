@@ -1,0 +1,111 @@
+\section{Alteraciones de Fase en Señales Discretas}
+		Considere la siguiente respuesta a impulso para el filtro:
+		\begin{equation}
+			h[n] = \frac{1}{16} \left( \sum_{k=0}^{15}(-1)^{k} \delta[n-k] \right)
+			\label{eq:5_phase}
+		\end{equation}
+		
+		Utilizando \textsc{Matlab} para calcular la \textsc{DFT} del filtro, se obtienen los siguientes gráficos:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_a_pi.pdf}
+			\caption{Magnitud y fase de la respuesta en frecuencia del filtro, entre $ \pm \pi$.}
+			\label{fig:5_a_pi}
+		\end{figure}	
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_a_fs.pdf}
+			\caption{Magnitud y fase de la respuesta en frecuencia del filtro, entre $ \pm fs/2$.}
+			\label{fig:5_a_fs}
+		\end{figure}	
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_a_zero_pole.pdf}
+			\caption{Diagrama de polos y ceros del filtro}
+			\label{fig:5_a_pole_diagram}
+		\end{figure}	
+		
+		A partir del gráfico \ref{fig:5_a_fs}, se puede ver que el filtro se comporta como un pasa-altos. Utilizando el filtro, para filtrar la señal \texttt{music.wav}, mediante un filtrado de fase cero, este filtrado se aplicará utilizando el comando implementado en \textsc{Matlab}: \texttt{filtfilt}, que realiza la siguiente operación equivalente:
+		\begin{equation}
+			y[n] = x[n] * h[n] * h[-n]
+		\end{equation}		 
+		
+		Que corresponde a la convolución de la señal, con la respuesta a impulso del filtro y luego con la respuesta a impulso de tiempo inverso del filtro. Analizando esto en el dominio de la frecuencia:
+		\begin{equation}
+		Y(k) = X(k) \cdot H(k) \cdot H'(k) = X(k) \cdot \underbrace{|H(k)|^{2}}_\text{Con fase cero}
+		\end{equation}
+		
+		Realizando el filtraje, sobre la señal se obtiene:
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_b_filtfilt.pdf}
+			\caption{Resultado filtraje de fase cero, sobre la señal. Se desglosa por canal}
+			\label{fig:5_b_filtfilt}
+		\end{figure}	
+		
+		Realizando la comparación entre el resultado obtenido para el filtraje de fase cero y una implementación del filtro utilizando convolución y ecuación de diferencias:
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_b_time_comp.pdf}
+			\caption{Comparación entre implementaciones del filtro}
+			\label{fig:5_b_time_comp}
+		\end{figure}	
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_b_freq_comp.pdf}
+			\caption{Comparación entre implementaciones del filtro, en el dominio de la frecuencia}
+			\label{fig:5_b_freq_comp}
+		\end{figure}
+		
+		A partir de los resultados obtenidos, se puede ver que para todos los casos implementados, no existe un desfase añadido por el filtro. En términos de magnitud, se puede ver que todos los casos son bastante similares, sin embargo, el caso donde se utilizó el comando \texttt{filtfilt} (filtraje con fase cero), se aprecia con atenuaciones más intensas sobre ciertas bandas en comparación a los resultados obtenidos mediante convolución o ecuación de diferencias. Observando el gráfico de la figura \ref{fig:5_b_time_comp} con resultados en el dominio del tiempo, se puede comprobar que efectivamente el filtraje de fase cero, ha sido más agresivo con las componentes de alta frecuencia, lo que permite obtener una señal \textit{más limpia}. Para los casos donde se utilizó convolución y ecuación de diferencias el resultado es prácticamente igual. Se pide generar la señal de tiempo invertido de x[n], para realizar esta operación se puede utilizar la siguiente idea. Sea $X(k)$ la \textsc{DFT} de la señal $x[n]$:
+		\begin{equation}
+			X(k) = |X(k)|  \cdot e^{j \angle H(k)}
+		\end{equation}
+		
+		Por lo tanto, si se quiere obtener $x[n]$:
+		\begin{equation}
+		x[-n] \underset{N}{\overset{DFT}{ \Longleftrightarrow }} |X(k) | \cdot e^{-j \angle H(k)}
+		\end{equation}
+		
+		Implementando en \textsc{Matlab} y graficando:
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_c_time.pdf}
+			\caption{Señal de tiempo inverso, comparación con señal original en el dominio temporal.}
+			\label{fig:5_c_temp}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_c_fft_comp.pdf}
+			\caption{Señal de tiempo inverso, comparación con señal original en el dominio de la frecuencia.}
+			\label{fig:5_c_frq}
+		\end{figure}
+		
+		A partir del gráfico de fase, se puede concluir que la inversión de fase fue correctamente aplicada y observando el resultado en el tiempo, se aprecia claramente el resultado. El archivo, con la señal generada se encuentra en los archivos de entrega en la carpeta \texttt{audio\_out}, bajo el nombre de \texttt{reverse\_time\_signal.wav}. Modificando la señal, para obtener una fase aleatoria: 
+		\begin{equation}
+			X(k) = |X(k)|  \cdot e^{j 2\pi r}
+		\end{equation}
+		
+	Donde $r$ es un número aleatorio, entre 1 y -1. Se obtienen los siguientes resultados:
+	
+			\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_d_time.pdf}
+			\caption{Señal de fase aleatoria, comparación con señal original en el dominio temporal.}
+			\label{fig:5_d_temp}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center
+			\includegraphics[width=0.6\textwidth,clip, trim = {1.9cm 6.8cm 2.3cm 7cm}]{../plot_out/5_d_fft_comp.pdf}
+			\caption{Señal de fase aleatoria, comparación con señal original en el dominio de la frecuencia.}
+			\label{fig:5_d_frq}
+		\end{figure}
+		
+		El archivo, con la señal generada se encuentra en los archivos de entrega en la carpeta \texttt{audio\_out}, bajo el nombre de \texttt{random\_phase\_signal.wav}.
